@@ -31,6 +31,8 @@ GameManager.prototype.keepPlaying = function() {
 
 // AN - undo last move
 GameManager.prototype.undo = function() {
+  this.over = false ; // Ensures undo works even after losing
+  this.actuator.continueGame() ; // Clear the game won/lost message
   this.storageManager.undoGameState() ;
   this.setup( true ) ;
 } ;
@@ -83,11 +85,11 @@ GameManager.prototype.addStartTiles = function() {
 
 // Adds a tile in a random position
 GameManager.prototype.addRandomTile = function() {
-  if (this.grid.cellsAvailable() ) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+  if ( this.grid.cellsAvailable() ) {
+    var value = Math.random() < 0.9 ? 2 : 4 ;
     var tile = new Tile(this.grid.randomAvailableCell(), value) ;
 
-    this.grid.insertTile(tile) ;
+    this.grid.insertTile( tile ) ;
   }
 } ;
 
@@ -101,13 +103,9 @@ GameManager.prototype.actuate = function( undo ) {
     this.storageManager.setBestScore( this.score ) ;
   } ;
 
-  // Clear the state when the game is over (game over only, not win)
-  if ( this.over ) {
-    this.storageManager.clearGameState() ;
-  } else {
-    if ( !undo ) {
-      this.storageManager.setGameState( this.serialize() ) ;
-    } ;
+  // AN - don't clear state on game over, do store if not undoing though
+  if ( !undo ) {
+    this.storageManager.setGameState( this.serialize() ) ;
   } ;
 
   this.actuator.actuate( this.grid, {
