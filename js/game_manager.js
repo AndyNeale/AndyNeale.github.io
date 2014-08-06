@@ -9,6 +9,7 @@ function GameManager( size, InputManager, Actuator, StorageManager ) {
   this.inputManager.on( "move", this.move.bind( this ) ) ;
   this.inputManager.on( "restart", this.restart.bind( this ) ) ;
   this.inputManager.on( "keepPlaying", this.keepPlaying.bind( this ) ) ;
+  // AN - added undo
   this.inputManager.on( "undo", this.undo.bind( this ) ) ;
 
   this.storageManager.clearGameState() ;
@@ -28,7 +29,7 @@ GameManager.prototype.keepPlaying = function() {
   this.actuator.continueGame() ; // Clear the game won/lost message
 } ;
 
-// Undo last move
+// AN - undo last move
 GameManager.prototype.undo = function() {
   this.storageManager.undoGameState() ;
   this.setup( true ) ;
@@ -41,7 +42,10 @@ GameManager.prototype.isGameTerminated = function() {
 
 // Set up the game
 GameManager.prototype.setup = function( undo ) {
+
+  // AN - set default value for undo parameter (used to track if we are redrawing the board after an undo)
   var undo = undo ? undo : false ;
+
   var previousState = this.storageManager.getGameState() ;
 
   // Reload the game from a previous game if present
@@ -89,6 +93,8 @@ GameManager.prototype.addRandomTile = function() {
 
 // Sends the updated grid to the actuator
 GameManager.prototype.actuate = function( undo ) {
+
+  // AN - set default value for undo parameter (used to track if we are redrawing the board after an undo)
   var undo = undo ? undo : false ;
 
   if ( this.storageManager.getBestScore() < this.score ) {

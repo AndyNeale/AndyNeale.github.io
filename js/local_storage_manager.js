@@ -1,4 +1,4 @@
-// Add setObj and getObj functions to local storage
+// AN - add setObj and getObj functions to local storage
 Storage.prototype.setObj = function( key, obj ) {
   return this.setItem( key, JSON.stringify( obj ) ) ;
 }
@@ -29,6 +29,7 @@ window.fakeStorage = {
 function LocalStorageManager() {
   this.bestScoreKey     = "bestScore" ;
   this.gameStateKey     = "gameState" ;
+  // AN - maximum number of game states to store
   this.maxMovesToStore  = 50 ;
 
   var supported = this.localStorageSupported() ;
@@ -57,7 +58,7 @@ LocalStorageManager.prototype.setBestScore = function( score ) {
   this.storage.setItem( this.bestScoreKey, score ) ;
 } ;
 
-// Game state getters/setters and clearing
+// AN - get game state from array in local storage
 LocalStorageManager.prototype.getGameState = function() {
   // Get game state from local storage
   var stateJSON = this.storage.getObj( this.gameStateKey ) ;
@@ -68,6 +69,7 @@ LocalStorageManager.prototype.getGameState = function() {
   return stateJSON[ stateJSON.length - 1 ] ;
 } ;
 
+// AN - set game state as array in local storage
 LocalStorageManager.prototype.setGameState = function( gameState ) {
   // Get game state from local storage
   var stateJSON = this.storage.getObj( this.gameStateKey ) ;
@@ -89,6 +91,7 @@ LocalStorageManager.prototype.clearGameState = function() {
   this.storage.removeItem( this.gameStateKey ) ;
 } ;
 
+// AN - undo game state from array in local storage
 LocalStorageManager.prototype.undoGameState = function() {
   // Get game state from local storage
   var stateJSON = this.storage.getObj( this.gameStateKey ) ;

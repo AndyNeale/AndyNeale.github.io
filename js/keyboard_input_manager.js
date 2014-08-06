@@ -67,7 +67,7 @@ KeyboardInputManager.prototype.listen = function() {
       self.restart.call( self, event ) ;
     }
     
-    // U key undoes the last move
+    // AN - U key undoes the last move
     if ( !modifiers && event.which === 85 ) {
       self.emit( "undo" ) ;
     }
@@ -77,6 +77,7 @@ KeyboardInputManager.prototype.listen = function() {
   this.bindButtonPress( ".retry-button", this.restart ) ;
   this.bindButtonPress( ".restart-button", this.restart ) ;
   this.bindButtonPress( ".keep-playing-button", this.keepPlaying ) ;
+  // AN - undo button
   this.bindButtonPress( ".undo-button", this.undo ) ;
 
   // Respond to swipe events
@@ -143,6 +144,7 @@ KeyboardInputManager.prototype.keepPlaying = function( event ) {
   this.emit( "keepPlaying" ) ;
 } ;
 
+// AN - undo
 KeyboardInputManager.prototype.undo = function( event ) {
   event.preventDefault() ;
   this.emit( "undo" ) ;
