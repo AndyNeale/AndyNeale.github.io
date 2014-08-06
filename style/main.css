@@ -16,9 +16,9 @@ body {
   clear: both; }
 
 h1.title {
-  font-size: 80px;
+  font-size: 48px;
   font-weight: bold;
-  margin: 0;
+  margin: 16px 0;
   display: block;
   float: left; }
 
