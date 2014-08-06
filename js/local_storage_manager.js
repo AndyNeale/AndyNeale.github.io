@@ -80,7 +80,7 @@ LocalStorageManager.prototype.setGameState = function( gameState ) {
   // Push latest game state to top of stack
   stateJSON.push( gameState ) ;
   // Truncate if necessary
-  if ( stateJSON.length > this.maxMovesToStore ) stateJSON.length = this.maxMovesToStore ;
+  if ( stateJSON.length > this.maxMovesToStore ) stateJSON.splice( 1 ) ;
   // Store back to local storage
   this.storage.setObj( this.gameStateKey, stateJSON ) ;
 } ;
@@ -100,7 +100,7 @@ LocalStorageManager.prototype.undoGameState = function() {
   } ;
   // Check if there are enough states to do an undo
   if ( stateJSON.length > 1 ) {
-    // Remove the first item
+    // Remove the last turn
     stateJSON.pop() ;
   } ;
   // Save the truncated array
