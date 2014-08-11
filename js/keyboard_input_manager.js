@@ -79,6 +79,9 @@ KeyboardInputManager.prototype.listen = function() {
   this.bindButtonPress( ".keep-playing-button", this.keepPlaying ) ;
   // AN - undo button
   this.bindButtonPress( ".undo-button", this.undo ) ;
+  // AN - load/save buttons
+  this.bindButtonPress( ".load-button", this.load ) ;
+  this.bindButtonPress( ".save-button", this.save ) ;
 
   // Respond to swipe events
   var touchStartClientX, touchStartClientY ;
@@ -148,6 +151,22 @@ KeyboardInputManager.prototype.keepPlaying = function( event ) {
 KeyboardInputManager.prototype.undo = function( event ) {
   event.preventDefault() ;
   this.emit( "undo" ) ;
+} ;
+
+// AN - load
+KeyboardInputManager.prototype.load = function( event ) {
+  if ( confirm( 'Really?' ) ) {
+    event.preventDefault() ;
+    this.emit( "load" ) ;
+  } ;
+} ;
+
+// AN - save
+KeyboardInputManager.prototype.save = function( event ) {
+  if ( confirm( 'Really?' ) ) {
+    event.preventDefault() ;
+    this.emit( "save" ) ;
+  } ;
 } ;
 
 KeyboardInputManager.prototype.bindButtonPress = function( selector, fn ) {

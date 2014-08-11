@@ -475,6 +475,22 @@ hr {
   float: right;
 }
 
+.load-button {
+  @include button;
+  display: block;
+  text-align: center;
+  float: right;
+  margin-right: 5px;
+}
+
+.save-button {
+  @include button;
+  display: block;
+  text-align: center;
+  float: right;
+  margin-right: 5px;
+}
+
 .game-explanation {
   margin-top: 50px;
 }

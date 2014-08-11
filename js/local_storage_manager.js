@@ -31,6 +31,8 @@ function LocalStorageManager() {
   this.gameStateKey     = "gameState" ;
   // AN - maximum number of game states to store
   this.maxMovesToStore  = 50 ;
+  // AN - saved game
+  this.saveStateKey     = "saveState" ;
 
   var supported = this.localStorageSupported() ;
   this.storage = supported ? window.localStorage : window.fakeStorage ;
@@ -108,4 +110,15 @@ LocalStorageManager.prototype.undoGameState = function() {
   } ;
   // Save the truncated array
   this.storage.setObj( this.gameStateKey, stateJSON ) ;
+} ;
+
+// AN - load game state
+LocalStorageManager.prototype.loadGameState = function() {
+  this.storage.removeItem( this.gameStateKey ) ;
+  this.storage.setObj( this.gameStateKey, this.storage.getObj( this.saveStateKey ) ) ;
+} ;
+
+// AN - save game state
+LocalStorageManager.prototype.saveGameState = function( gameState ) {
+  this.storage.setObj( this.saveStateKey, gameState ) ;
 } ;

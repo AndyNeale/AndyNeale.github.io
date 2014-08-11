@@ -11,6 +11,9 @@ function GameManager( size, InputManager, Actuator, StorageManager ) {
   this.inputManager.on( "keepPlaying", this.keepPlaying.bind( this ) ) ;
   // AN - added undo
   this.inputManager.on( "undo", this.undo.bind( this ) ) ;
+  // AN - added load/save
+  this.inputManager.on( "load", this.load.bind( this ) ) ;
+  this.inputManager.on( "save", this.save.bind( this ) ) ;
 
   this.storageManager.clearGameState() ;
   this.setup() ;
@@ -35,6 +38,19 @@ GameManager.prototype.undo = function() {
   this.actuator.continueGame() ; // Clear the game won/lost message
   this.storageManager.undoGameState() ;
   this.setup( true ) ;
+} ;
+
+// AN - load game
+GameManager.prototype.load = function() {
+  this.over = false ; // Ensures load works even after losing
+  this.actuator.continueGame() ; // Clear the game won/lost message
+  this.storageManager.loadGameState() ;
+  this.setup( true ) ;
+} ;
+
+// AN - save game
+GameManager.prototype.save = function() {
+  this.storageManager.saveGameState( this.storageManager.getGameState() ) ;
 } ;
 
 // Return true if the game is lost, or has won and the user hasn't kept playing
@@ -155,8 +171,8 @@ GameManager.prototype.move = function( direction ) {
 
   var cell, tile ;
 
-  var vector     = this.getVector(direction) ;
-  var traversals = this.buildTraversals(vector) ;
+  var vector     = this.getVector( direction ) ;
+  var traversals = this.buildTraversals( vector ) ;
   var moved      = false ;
 
   // Save the current tile positions and remove merger information
