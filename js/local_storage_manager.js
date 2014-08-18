@@ -84,13 +84,14 @@ LocalStorageManager.prototype.setGameState = function( gameState ) {
   // Push latest game state to top of stack
   stateJSON.push( gameState ) ;
   // Truncate if necessary
-  if ( stateJSON.length > this.maxMovesToStore ) stateJSON.splice( 1 ) ;
+  if ( stateJSON.length > this.maxMovesToStore ) stateJSON.shift() ;
   // Store back to local storage
   this.storage.setObj( this.gameStateKey, stateJSON ) ;
 } ;
 
 LocalStorageManager.prototype.clearGameState = function() {
   this.storage.removeItem( this.gameStateKey ) ;
+  this.storage.removeItem( this.scoreStateKey ) ; // DEBUG
 } ;
 
 // AN - undo game state from array in local storage
